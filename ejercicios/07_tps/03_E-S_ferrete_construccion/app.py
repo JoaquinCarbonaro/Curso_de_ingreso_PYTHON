@@ -63,7 +63,62 @@ class App(customtkinter.CTk):
         self.btn_calcular.grid(row=3, pady=10, columnspan=2, sticky="nsew")
 
     def btn_calcular_on_click(self):
-        pass
+        quebracho_grueso = 0
+        quebracho_grueso_ancho = 0
+        quebracho_grueso_largo = 0
+
+        largo = self.txt_largo.get()
+        ancho = self.txt_ancho.get()
+
+        largo_float = float(largo)
+        ancho_float = float(ancho)
+
+        area = largo_float * ancho_float
+        perimetro = (largo_float + ancho_float) * 2
+
+        mensaje_punto_a = "Los metros cuadrados del terreno son: {0:.2f} m2 y los metros lineales del perimetro son: {1:.2f}".format(area, perimetro)
+
+        if largo_float > 4.8 or ancho_float > 4.8:
+            quebracho_grueso = 4
+            quebracho_grueso_ancho = ancho_float // 250 * 2
+            quebracho_grueso_largo = largo_float // 250 * 2
+
+        quebracho_grueso += quebracho_grueso_ancho + quebracho_grueso_largo
+        
+        mensaje_punto_b ="La cantidad de quebrachos necesarios para el terreno son: {0}".format(quebracho_grueso)
+
+        espacio_tomado_largo = 2.4 * quebracho_grueso_largo / 2
+        espacio_tomado_ancho = 2.4 * quebracho_grueso_ancho / 2
+
+        
+        ancho_espacio_disponible = ancho_float - espacio_tomado_ancho
+        largo_espacio_disponible = largo_float - espacio_tomado_largo
+
+        quebracho_fino_ancho = ancho_espacio_disponible // 12 * 2
+        quebracho_fino_largo = largo_espacio_disponible // 12 * 2
+
+        quebracho_fino = quebracho_fino_ancho + quebracho_fino_largo
+
+        mensaje_punto_c = "La cantidad de quebracho fino necesario para el terreno son: {0}".format(quebracho_fino)
+
+        espacio_tomado_largo += 2.2 * quebracho_fino_largo / 2
+        espacio_tomado_largo += 2.2 * quebracho_fino_ancho / 2
+
+        ancho_espacio_disponible = ancho_float - espacio_tomado_ancho
+        largo_espacio_disponible = largo_float - espacio_tomado_largo
+
+        varillas_ancho = ancho_espacio_disponible // 2 * 2
+        varillas_largo = largo_espacio_disponible // 2 * 2
+
+        varilla = varillas_ancho + varillas_largo
+
+        mensaje_punto_d = "La cantidad de varillas necesarias son: {0}".format(varilla)
+
+        alambre = perimetro * 7
+
+        mensaje_punto_e = "La cantidad de alambre necesario es: {0:.2f} mts".format(alambre)
+
+        alert("Informe", "{0} \n{1} \n{2} \n{3} \n{4}".format(mensaje_punto_a, mensaje_punto_b, mensaje_punto_c, mensaje_punto_d,mensaje_punto_e))
 
 
 if __name__ == "__main__":
