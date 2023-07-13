@@ -6,6 +6,9 @@ import customtkinter
 
 
 '''
+nombre:Joaquin
+apellido:Carbonaro
+---
 Enunciado:
 Obtener el destino seleccionado en el combobox_destino, luego al presionar el botón 
 ‘Informar’ indicar mediante alert si en el destino hace frío o calor la mayoría 
@@ -29,7 +32,14 @@ class App(customtkinter.CTk):
         
     
     def btn_informar_on_click(self):
-        pass
+        destino = self.combobox_destino.get()
+
+        match destino:
+            case "Bariloche" | "Ushuaia":
+                alert("ejercicio 08", "Frío")
+            case "Mar del plata" | "Cataratas":
+                alert("ejercicio 08", "Calor")
+
     
     
 if __name__ == "__main__":

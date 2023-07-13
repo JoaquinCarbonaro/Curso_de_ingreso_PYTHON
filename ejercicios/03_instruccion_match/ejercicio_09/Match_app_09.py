@@ -6,6 +6,9 @@ import customtkinter
 
 
 '''
+nombre:Joaquin
+apellido:Carbonaro
+---
 Una agencia de viajes cobra $15.000 por cada estadía como base. 
 Luego para calcular las tarifas total realiza el siguiente cálculo, 
 en función de la estación del año y del destino elegido:

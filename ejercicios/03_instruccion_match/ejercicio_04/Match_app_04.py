@@ -7,6 +7,9 @@ import customtkinter
 
 '''
 Enuciado:
+nombre:Joaquin
+apellido:Carbonaro
+---
 Al presionar el botón ‘Informar’ mostrar mediante alert los siguientes mensajes 
 en función del mes seleccionado:
     Si tiene 28 días
@@ -33,7 +36,15 @@ class App(customtkinter.CTk):
         
     
     def btn_informar_on_click(self):
-        pass
+        mes = self.combobox_mes.get()
+
+        match mes:
+            case "Febrero":
+                alert("ejercicio 04", "Si tiene 28 días")
+            case "Abril" | "Junio" | "Septiembre" | "Noviembre":
+                alert("ejercicio 04", "Si tiene 30 días")
+            case _:
+                alert("ejercicio 04","Si tiene 31 días")
     
 if __name__ == "__main__":
     app = App()
