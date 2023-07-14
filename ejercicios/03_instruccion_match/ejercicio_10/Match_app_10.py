@@ -45,7 +45,32 @@ class App(customtkinter.CTk):
         
     
     def btn_informar_on_click(self):
-        pass
+        destino = self.combobox_destino.get()
+        estacion = self.combobox_estaciones.get()
+
+        match estacion:
+            case "Verano":
+                match destino:
+                    case "Mar del plata" | "Cataratas":
+                        alert("ejercicio 10", "Se viaja")
+                    case "Bariloche"| "Cordoba":
+                        alert("ejercicio 10", "No se viaja")
+            case "Otoño":
+                match destino:
+                    case "Bariloche" | "Mar del plata" | "Cataratas" | "Cordoba":
+                        alert("ejercicio 10", "Se viaja")
+            case "Primavera":
+                match destino:
+                    case "Mar del plata" | "Cataratas" | "Cordoba":
+                        alert("ejercicio 10", "Se viaja")
+                    case "Bariloche":
+                        alert("ejercicio 10", "No se viaja")
+            case "Invierno":
+                match destino:
+                    case "Bariloche":
+                        alert("ejercicio 10", "Se viaja")
+                    case "Cataratas" | "Cordoba" | "Mar del plata":
+                        alert("ejercicio 10", "No se viaja")
             
     
 if __name__ == "__main__":
