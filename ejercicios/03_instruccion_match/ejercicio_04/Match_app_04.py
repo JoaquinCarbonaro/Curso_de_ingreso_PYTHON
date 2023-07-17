@@ -40,12 +40,14 @@ class App(customtkinter.CTk):
 
         match mes:
             case "Febrero":
-                alert("ejercicio 04", "Si tiene 28 días")
+                mensaje = "Si tiene 28 días"
             case "Abril" | "Junio" | "Septiembre" | "Noviembre":
-                alert("ejercicio 04", "Si tiene 30 días")
+                mensaje = "Si tiene 30 días"
             case _:
-                alert("ejercicio 04","Si tiene 31 días")
-    
+                mensaje = "Si tiene 31 días"
+
+        alert("ejercicio 04", mensaje)
+
 if __name__ == "__main__":
     app = App()
     app.geometry("300x300")

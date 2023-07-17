@@ -44,13 +44,15 @@ class App(customtkinter.CTk):
 
         match mes:
             case "Enero":
-                alert("ejercicio 01", "Que comiences bien el año!!!")
+                mensaje = "Que comiences bien el año!!!"
             case "Marzo":
-                alert("ejercicio 01", "A clases!!")
+                mensaje = "A clases!!"
             case "Julio":
-                alert("ejercicio 01", "Se vienen las vacaciones!!")
+                mensaje = "Se vienen las vacaciones!!"
             case "Diciembre":
-                alert("ejercicio 01","Felices fiestas!!!")
+                mensaje = "Felices fiestas!!!"
+
+        alert("ejercicio 01", mensaje)
 
 
     

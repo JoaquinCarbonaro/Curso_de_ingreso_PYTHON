@@ -36,13 +36,15 @@ class App(customtkinter.CTk):
 
         match destino:
             case "Bariloche":
-                alert("ejercicio 07", "Oeste")
+                mensaje = "Oeste"
             case "Mar del plata":
-                alert("ejercicio 07", "Este")
+                mensaje = "Este"
             case "Cataratas":
-                alert("ejercicio 07", "Norte")
+                mensaje = "Norte"
             case "Ushuaia":
-                alert("ejercicio 07", "Sur")
+                mensaje = "Sur"
+
+        alert("ejercicio 07", mensaje)
 
     
     

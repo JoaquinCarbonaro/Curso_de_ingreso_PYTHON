@@ -52,26 +52,25 @@ class App(customtkinter.CTk):
             case "Verano":
                 match destino:
                     case "Mar del plata" | "Cataratas":
-                        alert("ejercicio 10", "Se viaja")
+                        mensaje = "Se viaja"
                     case "Bariloche"| "Cordoba":
-                        alert("ejercicio 10", "No se viaja")
+                        mensaje = "No se viaja"
             case "Otoño":
-                match destino:
-                    case "Bariloche" | "Mar del plata" | "Cataratas" | "Cordoba":
-                        alert("ejercicio 10", "Se viaja")
+                mensaje = "Se viaja"
             case "Primavera":
                 match destino:
                     case "Mar del plata" | "Cataratas" | "Cordoba":
-                        alert("ejercicio 10", "Se viaja")
+                        mensaje = "Se viaja"
                     case "Bariloche":
-                        alert("ejercicio 10", "No se viaja")
+                        mensaje = "No se viaja"
             case "Invierno":
                 match destino:
                     case "Bariloche":
-                        alert("ejercicio 10", "Se viaja")
+                        mensaje = "Se viaja"
                     case "Cataratas" | "Cordoba" | "Mar del plata":
-                        alert("ejercicio 10", "No se viaja")
-            
+                        mensaje = "No se viaja"
+
+        alert("ejercicio 10", mensaje)    
     
 if __name__ == "__main__":
     app = App()
