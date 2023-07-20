@@ -1,4 +1,7 @@
 '''
+nombre:Joaquin
+apellido:Carbonaro
+---
 De los candidatos a las paso del mes de Octubre (no sabemos cuantos), se registra:
 nombre, la edad (mayor 25) y la cantidad de votos (no menor a cero) que recibio en las elecciones.
 Informar: 
