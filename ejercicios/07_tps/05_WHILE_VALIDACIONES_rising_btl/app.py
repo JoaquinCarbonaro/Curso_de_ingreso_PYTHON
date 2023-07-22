@@ -8,8 +8,9 @@ import customtkinter
 nombre:Joaquin
 apellido:Carbonaro
 ---
-Rising BTL. Empresa dedicada a la toma de datos para realizar estadísticas y censos nos pide realizar una carga de datos validada e ingresada 
-por ventanas emergentes solamente (para evitar hacking y cargas maliciosas) y luego asignarla a cuadros de textos. 
+Rising BTL. Empresa dedicada a la toma de datos para realizar estadísticas y censos nos pide realizar una carga de datos 
+validada e ingresada por ventanas emergentes solamente (para evitar hacking y cargas maliciosas) y luego asignarla a cuadros 
+de textos. 
 
 Los datos requeridos son los siguientes:
     Apellido
@@ -53,7 +54,43 @@ class App(customtkinter.CTk):
         self.btn_validar.grid(row=4, pady=20, columnspan=2, sticky="nsew")
 
     def btn_validar_on_click(self):
-        pass
+        
+        apellido = prompt("TP 05", "Ingrese su apellido: ")
+        while apellido == None or apellido.isdigit():
+            apellido = prompt("TP 05", "Ingrese su apellido: ")
+        
+        edad = prompt("TP 05", "Ingrese su edad: ")
+        edad_int = int(edad)
+        while edad_int < 18 or edad_int > 90:
+            edad = prompt("TP 05", "Ingrese su edad: ")
+            edad_int = int(edad)
+
+        estado_civil = prompt("TP 05", "Ingrese su estado civil: \"Soltero/a\", \"Casado/a\", \"Divorciado/a\", \"Viudo/a\"")
+        while estado_civil != "Soltero/a" and estado_civil != "Casado/a" and estado_civil != "Divorciado/a" and estado_civil != "Viudo/a":
+            estado_civil = prompt("TP 05", "Ingrese su estado civil: \"Soltero/a\", \"Casado/a\", \"Divorciado/a\", \"Viudo/a\"")
+        
+        numero_de_legajo = prompt("TP 05", "Ingrese su numero de lejago: ")
+        while len(numero_de_legajo) != 4 or not numero_de_legajo.isdigit() or numero_de_legajo[0] == '0':
+            numero_de_legajo = prompt("TP 05", "Ingrese su numero de lejago: ")
+        
+        self.txt_apellido.delete(0, 'end')
+        self.txt_apellido.insert(0, apellido)
+
+        self.txt_edad.delete(0, 'end')
+        self.txt_edad.insert(0, edad)
+
+        if estado_civil == "Soltero/a":
+            self.combobox_tipo.set("Soltero/a")
+        elif estado_civil == "Casado/a":
+            self.combobox_tipo.set("Casado/a")
+        elif estado_civil == "Divorciado/a":
+            self.combobox_tipo.set("Divorciado/a")
+        else:
+            self.combobox_tipo.set("Viudo/a")
+
+        self.txt_legajo.delete(0, 'end')
+        self.txt_legajo.insert(0, numero_de_legajo)
+
 
 
 
