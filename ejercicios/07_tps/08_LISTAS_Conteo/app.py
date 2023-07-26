@@ -47,11 +47,56 @@ class App(customtkinter.CTk):
         self.lista = []
 
     def btn_comenzar_ingreso_on_click(self):
-        pass
+        while True:
+            numero = prompt("TP 08", "Ingrese un número:")
+            
+            if numero == None:
+                break
+            else:
+                numero = int(numero)
+                self.lista.append(numero)
+            
 
     def btn_mostrar_estadisticas_on_click(self):
-        pass
+        acumulador_negativos = 0
+        acumulador_positivos = 0
+        contador_positivos = 0
+        contador_negativos = 0
+        contador_ceros = 0
+        minimo_negativo = None
+        maximo_positivo = None
 
+        for elemento in self.lista:
+            if elemento < 0:
+                acumulador_negativos += elemento
+                contador_negativos += 1
+                if minimo_negativo == None or elemento < minimo_negativo:
+                    minimo_negativo = elemento
+            elif elemento > 0:
+                acumulador_positivos += elemento
+                contador_positivos += 1
+                if maximo_positivo == None or elemento > maximo_positivo:
+                    maximo_positivo = elemento
+            else:
+                contador_ceros += 1 
+
+        if contador_negativos > 0:
+            promedio_negativos = acumulador_negativos / contador_negativos
+
+        resultado = "Suma acumulada de los negativos: {}\n".format(acumulador_negativos)
+        resultado += "Suma acumulada de los positivos: {}\n".format(acumulador_positivos)
+        resultado += "Cantidad de números positivos ingresados: {}\n".format(contador_positivos)
+        resultado += "Cantidad de números negativos ingresados: {}\n".format(contador_negativos)
+        resultado += "Cantidad de ceros: {}\n".format(contador_ceros)
+        resultado += "Mínimo de los negativos: {}\n".format(minimo_negativo)
+        resultado += "Máximo de los positivos: {}\n".format(maximo_positivo)
+        resultado += "Promedio de los negativos: {}\n".format(promedio_negativos)
+
+        alert("TP 08", resultado)
+
+
+
+        
 
 if __name__ == "__main__":
     app = App()
