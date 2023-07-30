@@ -16,6 +16,9 @@ for i in range(0, len(self.lista_nombre_pokemones), 1):
 ############### RECORRER 3 LISTAS (MIN con posibles iguales) ############### 
 
 #Nombre y Poder del pokemon de tipo Psiquico con el poder mas bajo.
+bandera_primer = True
+minimo_psiquico = None
+
 for i in range (len(self.lista_tipo_pokemones)):
             poder = self.lista_poder_pokemones[i]
             tipo = self.lista_tipo_pokemones[i]

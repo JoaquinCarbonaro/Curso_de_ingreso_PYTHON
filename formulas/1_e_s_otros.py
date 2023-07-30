@@ -37,7 +37,7 @@ print(f"Bla bla {nombre} blabla {poder}")
 
 #texto
 self.txt_variable.delete(0, 'end')
-self.txt_variable.delete(0, variable)
+self.txt_variable.insert(0, variable)
 
 #opciones(combobox)
 self.combobox_tipo.set("Soltero/a")
@@ -95,7 +95,7 @@ numero_aleatorio = random.raandit(1,10)
     +                =            and           !=
     -                +=           or            ==
     *                -=           not           >
-    /                                           <
-    //                                          =>
+    /                *=                         <
+    //               /=                         =>
     %                                           =<
     **
