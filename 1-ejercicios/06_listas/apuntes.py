@@ -54,7 +54,7 @@ while True:
         minimo = numero_ingresado
 
 
-#validar que sea una palabra
+#validar que sea una numero cuando ingresa una palabra
 bandera_numero = True
 palabra = prompt("Mostrar","Ingrese una palabra: ")
  #ejemplo: Hola = [H],[o],[l],[a]

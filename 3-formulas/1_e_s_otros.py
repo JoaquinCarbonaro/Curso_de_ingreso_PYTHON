@@ -42,6 +42,9 @@ self.txt_variable.insert(0, variable)
 #opciones(combobox)
 self.combobox_tipo.set("Soltero/a")
 
+#listas:
+lista_vacia.append(elemento)
+lista_vacia.remove(elemento)
 
 
 ############### MENSAJE ###############
@@ -75,7 +78,7 @@ False    +   False    =   False  /   False
 
 
 
-############### BUCLE INFINITO ###############
+############### PARAR BUCLE INFINITO ###############
 administrador_de_tareas = python
 
 

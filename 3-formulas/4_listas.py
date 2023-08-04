@@ -11,6 +11,17 @@ for i in range(0, len(self.lista_nombre_pokemones), 1):
     nombre = self.lista_nombre_pokemones[i]
     print(f"El nombre del pokemon es {nombre} y su posicion en la lista es {i}")
 
+#otro ejemplo
+for i in range(len(self.lista_precios_105)):
+    lista_105 = self.lista_precios_105[i]
+    lista_105 /= 105
+    print(f"En la posicion {i}, el precio es: {lista_105:.2f} - IVA 10.5")
+
+for i in range(len(self.lista_precios_21)):
+    lista_21 = self.lista_precios_21[i]
+    lista_21 /= 21
+    print(f"En la posicion {i}, el precio es: {lista_21:.2f} - IVA 21")
+
 
 
 ############### RECORRER 3 LISTAS (MIN con posibles iguales) ############### 

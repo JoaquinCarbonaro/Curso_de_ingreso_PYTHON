@@ -9,7 +9,8 @@ Enunciado:
 La Cueva De Fausto:
 Se pide un programa que agrega los ingresos y egresos de dinero en dos divisas, dólares y pesos
 
-A)  Al presionar el botón 'Agregar' se debera cargar el dinero (Positivo si es un ingreso, negativo si es un egreso),
+A)  Al presionar el botón 'Agregar' se debera cargar el dinero 
+(Positivo si es un ingreso, negativo si es un egreso),
 el cual podra ser ingresado en ARS o en USD.
 
     El tipo de cambio indicado mediante una lista desplegable.
@@ -23,7 +24,8 @@ Si se cargo  correctamente indicarlo con un Alert
 
 -- SOLO SE CARGARAN LOS VALORES SI Y SOLO SI SON CORRECTOS --
 
-B) Al presionar el boton mostrar se deberan listar las transacciones en USD, en ARS y su posicion en la lista (por terminal)
+B) Al presionar el boton mostrar se deberan listar las transacciones en USD, 
+en ARS y su posicion en la lista (por terminal)
 
 Del punto C solo debera realizar dos informes,
 para determinar que informe hacer, tenga en cuenta lo siguiente:
@@ -80,64 +82,62 @@ class App(customtkinter.CTk):
 
 
     def btn_agregar_on_click(self):
-        USD_ARS = 541
+        dinero = self.txt_dinero.get()
+        divisa = self.combobox_divisa.get()
+        USD = 541
 
-        dinero_usuario = self.txt_dinero.get()
-        tipo_divisa = self.combobox_divisa.get()
-
-        if dinero_usuario == '' or dinero_usuario == '0':
-            alert ('UTN', 'Ingrese un Monto valido')
-        else: 
-            dinero_usuario = float(dinero_usuario)
-            self.txt_dinero.delete(0, 'end')
-
-        if tipo_divisa == "USD":
-            dinero_usuario = dinero_usuario * USD_ARS 
-                
-        self.lista_transacciones.append(dinero_usuario)
-
-        alert ('UTN','Importe cargado correctamente')
-    
-    def btn_mostrar_on_click(self):
-        #B) Al presionar el boton mostrar se deberan listar las transacciones en USD, en ARS y su posicion en la lista (por terminal) """
-
-        USD_ARS = 541
-        for i in range(len(self.lista_transacciones)):
-            valor = self.lista_transacciones[i]
-            cambio_ars_usd = valor / USD_ARS
-
-            if valor > 0:
-                mensaje_ars = f"Ingreso:{valor} en ARS"
-                mensaje_usd = f" y {cambio_ars_usd} en USD"
-            else:
-                mensaje_ars = f"Egreso:{valor} en ARS"
-                mensaje_usd = f"y {cambio_ars_usd} en USD"
-
-            print(mensaje_ars, mensaje_usd, 'corresponde al indice', i, )
-
-    def btn_informar_on_click(self):
-        #4- Informar las transacciones que superan el promedio total (en ARS)
-        #5- Informar las transacciones que NO superan el promedio total (en USD)
-        USD_ARS = 541
-        acumulador_transacciones = 0
-
-        if len(self.lista_transacciones) > 0:
-
-            for valor in self.lista_transacciones:
-                acumulador_transacciones += valor
-                
-            promedio_transacciones = acumulador_transacciones / len(self.lista_transacciones)
-                
-            for valor_transacciones in self.lista_transacciones:
-                if valor_transacciones > promedio_transacciones:
-                    mensaje_promedio = '{0:.2f}ARS supera el valor promedio del total de las transacciones'.format(valor_transacciones)
-                else:
-                    cambio_ars_usd = valor_transacciones / USD_ARS
-                    mensaje_promedio = '{0:.4f}USD no supera valor promedio del total de las transacciones'.format(cambio_ars_usd)
-
-                alert("promedio", mensaje_promedio)
+        if dinero == '' or dinero == "0" or dinero.isalpha():
+            alert("Error", "El dinero ingresado no es un número válido")  
         else:
-            alert("utn", 'Se requiere el ingreso de datos para realizar el informe')
+            dinero_float = float(dinero) 
+            alert("Carga Exitosa", "El dinero se ingreso correctamente")
+            if divisa == "USD":
+                 conversion_a_ars = dinero_float * USD
+                 self.lista_transacciones.append(conversion_a_ars)
+            elif divisa == "ARS":
+                 self.lista_transacciones.append(dinero_float)      
+            else:
+             alert("Error", "La divisa no es valido")
+        #para borrar el campo
+        self.txt_dinero.delete(0,'end')
+ 
+    # B) Al presionar el boton mostrar se deberan listar las transacciones en USD, 
+    # en ARS y su posicion en la lista (por terminal) 
+    def btn_mostrar_on_click(self):
+        USD = 541
+
+        for i in range(len(self.lista_transacciones)):
+            usd = self.lista_transacciones[i] / USD
+            ars = self.lista_transacciones[i]
+    
+            mensaje_dolares = "Dólares {:.2f}".format(usd)
+            mensaje_ars = "Pesos {:.2f}".format(ars)
+            print(f"{i} {mensaje_dolares} {mensaje_ars}")
+    
+   
+
+    #2- Promedio de dinero ingresado (mostrarlo en ARS)   
+    def btn_informar_on_click(self):
+        acumulador = 0
+        transaccion_menor_al_promedio = True
+        acumulador_menor_promedio = 0
+        
+        for i in self.lista_transacciones:
+           acumulador += i  
+        if len(self.lista_transacciones) != 0:
+            promedio = acumulador / len(self.lista_transacciones)          
+        else:
+            promedio = 0
+           
+    # 7- Informar la cantidad de transacciones que NO superan el promedio total
+        for i in self.lista_transacciones:
+            if transaccion_menor_al_promedio or self.lista_transacciones[i] < promedio:
+                acumulador_menor_promedio += 1
+                transaccion_menor_al_promedio = False
+
+        mensaje = "El promedio es: {0}\n\
+        La cantidad de transacciones que NO superan el promedio total son {1}".format(promedio,acumulador_menor_promedio)
+        alert("la cueva de Fausto", mensaje)
 
 if __name__ == "__main__":
     app = App()

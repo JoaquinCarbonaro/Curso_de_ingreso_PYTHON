@@ -87,8 +87,8 @@ contador_par = 0
 numero = prompt("Ejercicio 06", "Ingrese un numero: ")
 numero_int = int(numero)
 
-for i in range (1, numero_int + 1, 1):
-    if (i % 2 == 0):
+for i in range (1, numero_int + 1, 1): #no ingresa el 0
+    if (i % 2 == 0): #impar: i % 2 == 1
         contador_par += 1
         alert("Ejercicio 06", i)
 

@@ -38,16 +38,16 @@ para determinar que informe hacer, tenga en cuenta lo siguiente:
 EL RESTO DE LOS INFORMES LOS PUEDE IGNORAR. 
 
 *******Tener en cuenta que pueden no haber ingresos o egresos**********
-C) Al presionar el boton Informar 
+C) Al presionar el boton Informar
         0- Cantidad de dinero (en ARS) y posicion (indice) de la transaccion de mayor valor
-    1- Cantidad de dinero (en ARS) y posicion (indice) de la transaccion de menor valor
-    2- Promedio de dinero ingresado (mostrarlo en ARS) 
-    3- Promedio de dinero egresado (mostrarlo en USD) 
+            1- Cantidad de dinero (en ARS) y posicion (indice) de la transaccion de menor valor
+    2- Promedio de dinero ingresado (mostrarlo en ARS)
+            3- Promedio de dinero egresado (mostrarlo en USD)
     4- Informar las transacciones que superan el promedio total (en ARS)
     5- Informar las transacciones que NO superan el promedio total (en USD)
-    6- Informar la cantidad de Transacciones que superan el promedio total
+            6- Informar la cantidad de Transacciones que superan el promedio total
     7- Informar la cantidad de transacciones que NO superan el promedio total
-    8- Indicar Si hubo mas ingresos o egresos
+            8- Indicar Si hubo mas ingresos o egresos
         9- Indicar Si hubo ganancia o perdida
 
 
@@ -82,62 +82,74 @@ class App(customtkinter.CTk):
 
 
     def btn_agregar_on_click(self):
+#         A)  Al presionar el botón 'Agregar' se debera cargar el dinero (Positivo si es un ingreso, negativo si es un egreso),
+        # el cual podra ser ingresado en ARS o en USD.
 
-        valor_dolar = 541
+        #     El tipo de cambio indicado mediante una lista desplegable.
 
-        dinero = self.txt_dinero.get()
-        while dinero == 0 or dinero.isalpha():
-            alert("Error", "Monto inválido.")
-            break
+        # * Flotantes Distintos de 0
 
+        # Los ingresos/egresos se guardaran en la "self.lista_transacciones" en ARS.
+
+        # Si existe error al validar indicarlo mediante un Alert
+        # Si se cargo  correctamente indicarlo con un Alert
+
+        # -- SOLO SE CARGARAN LOS VALORES SI Y SOLO SI SON CORRECTOS --
+
+        DOLAR = 541
+        dinero =  self.txt_dinero.get()
         divisa = self.combobox_divisa.get()
-
-        if divisa == "USD":  #Convertir de USD a ARS
-            dinero *= valor_dolar
-        elif divisa != "ARS":
-            alert("Error", "Divisa inválida. Debe ser 'ARS' o 'USD'.")
         
-        dinero = float(dinero)
-        self.lista_transacciones.append(dinero)
-        alert("Éxito", f"Transacción agregada correctamente: {dinero} ARS")
-        self.txt_dinero.delete(0, 'end')
-            
+        if dinero == '' or dinero == '0':
+            alert ('UTN', 'Ingrese un monto valido')
+        else:
+            dinero = float(dinero)
+            alert(title="Exito", message="Se cargo correctamente el valor")
+            if divisa == "ARS":
+                self.lista_transacciones.append(dinero)
+            elif divisa == "USD":
+                dinero_de_usd_a_ars = dinero * DOLAR
+                self.lista_transacciones.append(dinero_de_usd_a_ars)
+            else:
+                alert(title="Error", message="El valor no es valido")
+         
+        self.txt_dinero.delete(0,'end')
     
     def btn_mostrar_on_click(self):
-        
-        valor_dolar = 541
-        contador = 0
+        #B) Al presionar el boton mostrar se deberan listar las transacciones en USD, en ARS y su posicion 
+        # en la lista (por terminal)
+        DOLAR = 541
 
-        for i in self.lista_transacciones:
-            monto_usd = (i / valor_dolar)
-            monto_ars = i
-            contador += 1
-            print(f"Transacción {contador}: USD {monto_usd:.2f} - ARS {monto_ars:.2f}")
+        for i in range(len(self.lista_transacciones)):
+            transaccion_peso = self.lista_transacciones[i]
+            transaccion_dolar = self.lista_transacciones[i] / DOLAR
+            print(f"Numero de transaccion: {i} - monto en pesos: {transaccion_peso} - monto en dolares: {transaccion_dolar}")
+
+
 
     def btn_informar_on_click(self):
-        es_primer_num = True
+        #0- Cantidad de dinero (en ARS) y posicion (indice) de la transaccion de mayor valor
+        bandera_primer = True
         maximo = None
-        contador = 0
+
+        for i in range(len(self.lista_transacciones)):
+            dinero = self.lista_transacciones[i]
+            if bandera_primer or dinero > maximo:
+                maximo = dinero
+                posicion = i
+                bandera_primer = False
+        print(f"La transaccion de mayor valor es {maximo} y su posicion es: {posicion}")
+
+        #9- Indicar Si hubo ganancia o perdida
         acumulador = 0
 
-        for i in self.lista_transacciones:
-            monto_ars = i
-            contador += 1
-            if es_primer_num or i > maximo:
-                maximo = i
-                posicion = contador
-                es_primer_num = False
-        
-        print(f"Transacción de mayor valor: {monto_ars:.2f} ARS y su posisicion es: {posicion}")
-        
-        resultado = acumulador / contador
-        if resultado > 0:
-            mensaje = "Hubo ganancias"
+        for i in range(len(self.lista_transacciones)):
+            dinero = self.lista_transacciones[i]
+            acumulador += dinero
+        if acumulador > 0:
+            print(f"Hubo ganancias")
         else:
-            mensaje = "Hubo perdidas"
-        
-        print(mensaje)
-
+            print(f"Hubo perdidas")
 
 
 
