@@ -18,9 +18,48 @@ prompt =  ok(vacio) == ''
 letras_y_palabras = and
 numeros = or
 
+#validaciones
+.isdigit() = valida enteros positivos
+.lower() = valida aunque sea minuscula o mayuscula
+
+#tipo de validaciones
+while solo cuando es prompt
+
+if funciona con combobox
 
 
-############### -largos- NUMERO (2 listas) {ingreso combobox} ############### modelo youtube
+
+############### COMBOBOX/PROMPT/LISTA ###############
+
+edad = self.txt_edad.get()
+nacionalidad = self.combobox_nacionalidad.get()
+
+if nacionalidad == "Extranjero":
+    alert("Error","No puede votar por ser extranjero")
+elif edad.isdigit() == False or int(edad) < 16 or int(edad) > 115:
+    alert("Error","No puede votar, debe ser de entre 16 y 115 años")
+elif nacionalidad == "Naturalizado" and int(edad) < 18:
+    alert("Error","La edad de un naturalizado para votar debe ser +18")
+else:
+    edad = int(edad)
+    voto = prompt("Voto","Ingrese el voto: (Massa, Milei, Larreta)")
+
+    while voto.lower() != "Massa" and voto.lower() != "Milei" and voto.lower() != "Larreta":
+        voto = prompt("Voto","Ingrese el voto: (Massa, Milei, Larreta)")
+
+    match voto:
+        case "Massa":
+            self.lista_edades_massa.append(edad)
+        case "Milei":
+            self.lista_edades_milei.append(edad)
+        case "Larreta":
+            self.lista_edades_larreta.append(edad)
+
+    alert("Correcto","Puede votar")
+
+
+
+############### -NUMERO- COMBOBOX (2 listas) ############### modelo youtube
 
 #validar que sea una nro cuando ingresa palabras
 precio_sin_iva_texto =  self.txt_precio_articulo.get()
@@ -54,52 +93,7 @@ else:
 
 
 
-############### NUMERO (1 lista) {ingreso prompt} ############### 
-
-while True:
-    numero = prompt("Ingreso","Ingrese un numero: ")
-    bandera_coma = False
-    primero_digito = True
-    bandera_valido = True
-
-    if numero is None or numero == '':
-        continue
-    else:
-        for digito in numero:
-            if  digito == '-' and primero_digito == True and len(numero) > 1 or digito.isdigit():
-                primero_digito = False
-            elif  digito == '.' and bandera_coma == False:
-                primero_digito = False
-                bandera_coma = True
-            else:
-                bandera_valido = False
-                print("No es un numero")
-                break
-        if bandera_valido:
-            break
-
-#se trabaja asi despues: modelo parcial
-numero = float(numero)
-print(numero)
-
-if ingreso == 0:
-            valido = False
-
-        if valido:
-            alert("Informe", "Dato ingresado correctamente")
-            ingreso = float(ingreso)
-            divisa = self.combobox_divisa.get()
-
-            if divisa == "USD":
-                ingreso = ingreso * CONVERTIR_EN_ARS
-            
-            self.lista_transacciones.append(ingreso)
-        else: 
-            alert("Error", "Error, el dato ingresado no es valido, debe ser un número y no puede ser 0")
-
-
-
-############### -cortos- NUMERO IF {ingreso combobox} ############### modelo parcial
+############### -NUMERO- PROMPT ############### modelo parcial
 
 numero = prompt("UTN","ingrese un nro:")
 while numero is none or not numero.isdigit():
@@ -125,9 +119,42 @@ alert ('UTN','Importe cargado correctamente')
 
 
 
-############### PALABRAS Y NUMEROS WHILE {ingrerso prompt} ###############
+############### -NUMERO- PROMPT ############### 
 
-#combobox
+numero_ingresado = prompt(title="Ingreso",prompt="Ingrese un número válido")
+bandera_coma = False
+primero_digito = True
+bandera_valido = True
+
+if numero_ingresado is None or numero_ingresado == '':
+    continue
+else:
+    for digito in numero_ingresado:
+        if  digito == '-' and primero_digito == True and len(numero_ingresado) > 1:
+            primero_digito = False
+        elif  digito == '.' and bandera_coma == False:
+            primero_digito = False
+            bandera_coma = True
+        elif digito.isdigit():
+            primero_digito = False
+            continue
+        else:
+            bandera_valido = False
+            print("Error: No es un número")
+            break
+    if bandera_valido:
+        numero_ingresado = float(numero_ingresado)
+        listado_numeros.append(numero_ingresado)
+        continuar = question(title="continuar", message="¿Desea continuar ingresando números?")
+        if continuar:
+            continue
+        else:
+            break
+
+
+
+############### PROMPT ###############
+
 estado_civil = prompt("TP 05", "Ingrese su estado civil: \"Soltero/a\", \"Casado/a\"")
 while estado_civil != "Soltero/a" and estado_civil != "Casado/a" :
     estado_civil = prompt("TP 05", "Ingrese su estado civil: \"Soltero/a\", \"Casado/a\"")

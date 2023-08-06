@@ -30,7 +30,7 @@ Si se voto correctamente indicarlo con un Alert
 
 -- SOLO SE CARGARAN LOS VALORES SI Y SOLO SI SON CORRECTOS --
 
-B) Al presionar el boton mostrar se deberan listar los votos de cada participante con el siguiente formato:
+B) Al presionar el boton mostrar se deberan listar los edad de cada participante con el siguiente formato:
 (i = Indice)
 Votantes de Massa:
 i Edad
@@ -66,9 +66,9 @@ C) Al presionar el boton Informar
     3- Informar Promedio de Edades De los votantes de Massa y Larreta
     4- Informar las edades que superan el promedio total
     5- Informar las edades que NO superan el promedio total de edad
-    6- Informar Porcentaje de votos de cada participante
+    6- Informar Porcentaje de edad de cada participante
     7- Informar la cantidad de votantes que NO superan el promedio total de edades
-    8- Informar el ganador de las elecciones (Suponiendo que solo hay uno, El que mas votos tuvo).
+    8- Informar el ganador de las elecciones (Suponiendo que solo hay uno, El que mas edad tuvo).
         9- Indicar que candidato tiene el mayor promedio de edad entre sus votantes
 '''
 
@@ -92,11 +92,35 @@ class App(customtkinter.CTk):
         self.btn_mostrar = customtkinter.CTkButton(master=self, text="Mostrar", command=self.btn_mostrar_on_click)
         self.btn_mostrar.grid(row=4, padx=20, pady=20, columnspan=2, sticky="nsew")
 
+        self.btn_informar_0= customtkinter.CTkButton(master=self, text="Informar 0", command=self.btn_informar_0_onclick)
+        self.btn_informar_0.grid(row=5, padx=20, pady=20, columnspan=2, sticky="nsew")     
+
         self.btn_informar_1= customtkinter.CTkButton(master=self, text="Informar 1", command=self.btn_informar_1_onclick)
-        self.btn_informar_1.grid(row=5, padx=20, pady=20, columnspan=2, sticky="nsew")     
+        self.btn_informar_1.grid(row=6, padx=20, pady=20, columnspan=2, sticky="nsew")
 
         self.btn_informar_2= customtkinter.CTkButton(master=self, text="Informar 2", command=self.btn_informar_2_onclick)
-        self.btn_informar_2.grid(row=6, padx=20, pady=20, columnspan=2, sticky="nsew")    
+        self.btn_informar_2.grid(row=7, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_3= customtkinter.CTkButton(master=self, text="Informar 3", command=self.btn_informar_3_onclick)
+        self.btn_informar_3.grid(row=8, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_4= customtkinter.CTkButton(master=self, text="Informar 4", command=self.btn_informar_4_onclick)
+        self.btn_informar_4.grid(row=9, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_5= customtkinter.CTkButton(master=self, text="Informar 5", command=self.btn_informar_5_onclick)
+        self.btn_informar_5.grid(row=10, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_6= customtkinter.CTkButton(master=self, text="Informar 6", command=self.btn_informar_6_onclick)
+        self.btn_informar_6.grid(row=11, padx=20, pady=20, columnspan=2, sticky="nsew")   
+
+        self.btn_informar_7= customtkinter.CTkButton(master=self, text="Informar 7", command=self.btn_informar_7_onclick)
+        self.btn_informar_7.grid(row=12, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_8= customtkinter.CTkButton(master=self, text="Informar 8", command=self.btn_informar_8_onclick)
+        self.btn_informar_8.grid(row=13, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_9= customtkinter.CTkButton(master=self, text="Informar 9", command=self.btn_informar_9_onclick)
+        self.btn_informar_9.grid(row=14, padx=20, pady=20, columnspan=2, sticky="nsew")
 
         self.lista_edades_massa = []
         self.lista_edades_milei = []
@@ -126,76 +150,67 @@ class App(customtkinter.CTk):
 
         # -- SOLO SE CARGARAN LOS VALORES SI Y SOLO SI SON CORRECTOS --
 
+
+        # validacion = while solo cuando es prompt / if funciona con combobox
+        #.isdigit.() = valida enteros positivos
+        #.lower() = valida aunque sea minuscula o mayuscula
         edad = self.txt_edad.get()
-        edad_int = int(edad)
-        if (edad_int == None) or edad_int > 115:
-            edad = alert("UTN", "Reingrese su edad: ")
+        nacionalidad = self.combobox_nacionalidad.get()
+
+        if nacionalidad == "Extranjero":
+            alert("Error","No puede votar por ser extranjero")
+        elif edad.isdigit() == False or int(edad) < 16 or int(edad) > 115:
+            alert("Error","No puede votar, debe ser de entre 16 y 115 años")
+        elif nacionalidad == "Naturalizado" and int(edad) < 18:
+            alert("Error","La edad de un naturalizado para votar debe ser +18")
         else:
-            nacionalidad = self.combobox_nacionalidad.get()
-            if nacionalidad == None or (nacionalidad != "Argentino" and nacionalidad != "Extranjero" and nacionalidad != "Naturalizado"):
-                nacionalidad = prompt("UTN", "Reingrese nacionalidad su nacionalidad: (Argentino, Extranjero, Naturalizado)")
+            edad = int(edad)
+            voto = prompt("Voto","Ingrese el voto: (Massa, Milei, Larreta)")
 
-            if (nacionalidad == "Argentino" and edad_int >= 16) or (nacionalidad == "Naturalizado" and edad_int >= 18):
-                voto = prompt("UTN","Ingrese a la persona que quiera votar: (Massa, Milei, Larreta)")
-                if voto == None or (voto != "Massa" and voto != "Milei" and voto != "Larreta"):
-                    voto = prompt("UTN","Reingrese a la persona que quiera votar: (Massa, Milei, Larreta)")
-                alert("UTN","Usted voto correctamente")
-                
-                if voto == "Massa":
-                    self.lista_edades_massa.append(edad_int)
-                elif voto == "Milei":
-                    self.lista_edades_milei.append(edad_int)
-                else:
-                    self.lista_edades_larreta.append(edad_int)
-            else:
-                alert("UTN","Usted NO puede votar")
-            
-            print(self.lista_edades_massa)
-        
+            while voto.lower() != "Massa" and voto.lower() != "Milei" and voto.lower() != "Larreta":
+                voto = prompt("Voto","Ingrese el voto: (Massa, Milei, Larreta)")
 
+            match voto:
+                case "Massa":
+                    self.lista_edades_massa.append(edad)
+                case "Milei":
+                    self.lista_edades_milei.append(edad)
+                case "Larreta":
+                    self.lista_edades_larreta.append(edad)
 
+            alert("Correcto","Puede votar")
 
     
     def btn_mostrar_on_click(self):
-        # B) Al presionar el boton mostrar se deberan listar los votos de cada participante con el siguiente formato:
+        # B) Al presionar el boton mostrar se deberan listar los edad de cada participante con el siguiente formato:
         # (i = Indice)
         # Votantes de Massa:
         # i Edad
         # 0 17
         # 1 42
         # 2 32
-        # Votantes de Milei:
-        # i Edad
-        # 0 25
-        # 1 22
-        # 2 32
-        # Votantes de Larreta:
-        # i Edad
-        # 0 16
-        # 1 23
-        # 2 45
 
-        mensaje ="Votantes de Massa: \n"
-        mensaje +="i - Edad \n"
-
+        print("Votantes de Massa:")
+        print("i Edad")
         for i in range(len(self.lista_edades_massa)):
             votantes_massa = self.lista_edades_massa[i]
-            mensaje = (f"{i} - {votantes_massa:.2f}")
-            print("Votantes de Massa: \ni - Edad \n" + mensaje)
+            print(i, votantes_massa)
 
+        print("Votantes de Milei:")
+        print("i Edad")
         for i in range(len(self.lista_edades_milei)):
             votantes_milei = self.lista_edades_milei[i]
-            mensaje = (f"{i} - {votantes_milei:.2f}")
-            print("Votantes de Milei: \ni - Edad \n" + mensaje)
+            print(i, votantes_milei)
 
+        print("Votantes de Larreta:")
+        print("i Edad")
         for i in range(len(self.lista_edades_larreta)):
             votantes_larreta = self.lista_edades_larreta[i]
-            mensaje = (f"{i} - {votantes_larreta:.2f}")
-            print("Votantes de Larreta: \ni - Edad \n" + mensaje)
+            print(i, votantes_larreta)
         
     
 
-    def btn_informar_1_onclick(self):
+    def btn_informar_0_onclick(self):
         #0- Informar Del mayor votante de Milei o Massa posicion y edad.
         lista_mayor_votante = []
                 
@@ -221,44 +236,97 @@ class App(customtkinter.CTk):
             if votante_maximo == self.lista_edades_massa[i]:
                 print(f"En la posicion {i}, el votante mas grande es de Massa y tiene: {votante_maximo:.2f}")
 
+        ########################################################
+
+        edad_mayor = None
+        posicion_del_mayor = None
+        voto_realizado = None
+
+        for i in range(0,len(self.lista_edades_milei),1):
+            if edad_mayor == None or self.lista_edades_milei[i] > edad_mayor:
+                edad_mayor = self.lista_edades_milei[i]
+                posicion_del_mayor = i
+                voto_realizado = "Milei"
+        
+        for i in range(0,len(self.lista_edades_massa),1):
+            if edad_mayor == None or self.lista_edades_massa[i] > edad_mayor:
+                edad_mayor = self.lista_edades_massa[i]
+                posicion_del_mayor = i
+                voto_realizado = "Massa"
+
+        if edad_mayor != None:
+            print(posicion_del_mayor, edad_mayor, voto_realizado)
+        else:
+            print("Listas vacias")
+
+    def btn_informar_1_onclick(self):
+        pass
 
     def btn_informar_2_onclick(self):
+        pass        
+
+    def btn_informar_3_onclick(self):
+        pass
+
+    def btn_informar_4_onclick(self):
+        pass
+
+    def btn_informar_5_onclick(self):
+        pass
+
+    def btn_informar_6_onclick(self):
+        pass
+
+    def btn_informar_7_onclick(self):
+        pass
+
+    def btn_informar_8_onclick(self):
+        pass
+
+    def btn_informar_9_onclick(self):
         #9- Indicar que candidato tiene el mayor promedio de edad entre sus votantes
-        acumulador_votos_massa = 0
-        acumulador_votos_milei = 0
-        acumulador_votos_larreta = 0
-
-        for votos in self.lista_edades_massa:
-            acumulador_votos_massa += votos
-        if contador_votos != 0:
-            contador_votos = len(self.lista_edades_massa)
-            promedio_votos_massa = acumulador_votos_massa / contador_votos
-        else:
-            promedio_votos_massa = 0
-
-        for votos in self.lista_edades_milei:
-            acumulador_votos_milei += votos
-            if contador_votos != 0:
-            contador_votos = len(self.lista_edades_milei)
-            promedio_votos_milei = acumulador_votos_milei / contador_votos
-        else:
-            promedio_votos_milei = 0
-
-        for votos in self.lista_edades_larreta:
-            acumulador_votos_larreta += votos
-            if contador_votos != 0:
-            contador_votos = len(self.lista_edades_larreta)
-            promedio_votos_larreta = acumulador_votos_larreta / contador_votos
-        else:
-            promedio_votos_larreta = 0
-
-        if promedio_votos_massa > promedio_votos_milei > promedio_votos_larreta:
-            print("El candidato que tiene el mayor promedio de edad entre sus votantes es: Massa")
-        elif promedio_votos_milei > promedio_votos_massa > promedio_votos_larreta:
-            print("El candidato que tiene el mayor promedio de edad entre sus votantes es: Milei")
-        elif promedio_votos_larreta > promedio_votos_massa > promedio_votos_milei:
-            print("El candidato que tiene el mayor promedio de edad entre sus votantes es: Larreta")
+        acumulador_edades_massa = 0
+        acumulador_edades_milei = 0
+        acumulador_edades_larreta = 0
         
+
+        for edad in self.lista_edades_massa:
+            acumulador_edades_massa += edad
+        
+        if len(self.lista_edades_massa) > 0:
+            promedio_edades_massa = acumulador_edades_massa / len(self.lista_edades_massa)
+        else:
+            promedio_edades_massa = 0
+
+        
+        for edad in self.lista_edades_milei:
+            acumulador_edades_milei += edad
+        
+        if len(self.lista_edades_milei) > 0:
+            promedio_edades_milei = acumulador_edades_milei / len(self.lista_edades_milei)
+        else:
+            promedio_edades_milei = 0
+
+        
+        for edad in self.lista_edades_larreta:
+            acumulador_edades_larreta += edad
+        
+        if len(self.lista_edades_larreta) > 0:
+            promedio_edades_larreta = acumulador_edades_larreta / len(self.lista_edades_larreta)
+        else:
+            promedio_edades_larreta = 0
+
+
+        if promedio_edades_massa > promedio_edades_milei and promedio_edades_massa > promedio_edades_larreta:
+            promedio_mayor = f"Massa con {promedio_edades_massa}"
+        elif promedio_edades_milei > promedio_edades_larreta:
+            promedio_mayor = f"Millei con {promedio_edades_milei}"
+        else:
+            promedio_mayor = f"Larreta con {promedio_edades_larreta}"
+            promedio_mayor = "Larreta con " + str(promedio_edades_larreta)
+            promedio_mayor = "Larreta con {0}".format(promedio_edades_larreta)
+
+        print(promedio_mayor)
 
 if __name__ == "__main__":
     app = App()

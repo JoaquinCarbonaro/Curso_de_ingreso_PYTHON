@@ -60,12 +60,14 @@ mensaje +=" "
 resultado = "cant: {0}\n".format(acumulador)
 resultado += "cant: {0}\n".format(acumulador)
 
-#mensaje parseado
-alert("UTN",f"Bla bla {nombre} blabla {poder}")
+#mensajes parseados
 
 alert("UTN",f"Bla bla {numero:.2f}")
-
 alert("UTN","Bla bla {0:.2f}".format(numero))
+
+promedio_mayor = f"Larreta con {promedio_edades_larreta}"
+promedio_mayor = "Larreta con " + str(promedio_edades_larreta)
+promedio_mayor = "Larreta con {0}".format(promedio_edades_larreta)
 
 
 ############### TABLA DE VALORES ###############
