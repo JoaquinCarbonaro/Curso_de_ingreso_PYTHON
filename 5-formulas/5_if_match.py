@@ -7,19 +7,19 @@ import customtkinter
 ############### MATCH ############### 
 
 match destino:
-            case "Bariloche" | "Ushuaia":
-                mensaje = "Frío"
-            case _:
-                mensaje = "Calor"
+    case "Bariloche" | "Ushuaia":
+        mensaje = "Frío"
+    case _:
+        mensaje = "Calor"
 
 #anidado
 match estacion:
-            case "Verano":
-                match destino:
-                    case "Mar del plata" | "Cataratas":
-                        mensaje = "Se viaja"
-                    case _:
-                        mensaje = "No se viaja"
+    case "Verano":
+        match destino:
+            case "Mar del plata" | "Cataratas":
+                mensaje = "Se viaja"
+            case _:
+                mensaje = "No se viaja"
 
 
 ############### IF ############### 

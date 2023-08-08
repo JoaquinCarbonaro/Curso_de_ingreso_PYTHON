@@ -62,13 +62,13 @@ EL RESTO DE LOS INFORMES LOS PUEDE IGNORAR.
 C) Al presionar el boton Informar 
         0- Informar Del mayor votante de Milei o Massa posicion y edad.
     1- Informar Del menor votante de Larreta o Milei posicion y edad.
-    2- Informar Promedio de Edades De los votantes de Milei y Larreta
+        2- Informar Promedio de Edades De los votantes de Milei y Larreta
     3- Informar Promedio de Edades De los votantes de Massa y Larreta
-    4- Informar las edades que superan el promedio total
+        4- Informar las edades que superan el promedio total
     5- Informar las edades que NO superan el promedio total de edad
-    6- Informar Porcentaje de edad de cada participante
+        6- Informar Porcentaje de votos de cada participante
     7- Informar la cantidad de votantes que NO superan el promedio total de edades
-    8- Informar el ganador de las elecciones (Suponiendo que solo hay uno, El que mas edad tuvo).
+        8- Informar el ganador de las elecciones (Suponiendo que solo hay uno, El que mas votos tuvo).
         9- Indicar que candidato tiene el mayor promedio de edad entre sus votantes
 '''
 
@@ -212,6 +212,7 @@ class App(customtkinter.CTk):
 
     def btn_informar_0_onclick(self):
         #0- Informar Del mayor votante de Milei o Massa posicion y edad.
+        '''
         lista_mayor_votante = []
                 
         for votantes in self.lista_edades_milei:
@@ -235,7 +236,7 @@ class App(customtkinter.CTk):
         for i in range(len(self.lista_edades_massa)):
             if votante_maximo == self.lista_edades_massa[i]:
                 print(f"En la posicion {i}, el votante mas grande es de Massa y tiene: {votante_maximo:.2f}")
-
+        '''
         ########################################################
 
         edad_mayor = None
@@ -259,29 +260,122 @@ class App(customtkinter.CTk):
         else:
             print("Listas vacias")
 
+
     def btn_informar_1_onclick(self):
         pass
 
     def btn_informar_2_onclick(self):
-        pass        
+        #2- Informar Promedio de Edades De los votantes de Milei y Larreta
+
+        acumulador_milei = 0
+        acumulador_larreta = 0
+
+        for edades in self.lista_edades_milei:
+            acumulador_milei += edades
+        if len(self.lista_edades_milei) > 0: #NO HAY NEGATIVOS, sino != 0
+            promedio_milei = acumulador_milei / len(self.lista_edades_milei)
+        else:
+            promedio_milei = 0
+      
+        for edades in self.lista_edades_larreta:
+            acumulador_larreta += edades
+        if len(self.lista_edades_larreta) > 0:
+            promedio_larreta = acumulador_larreta / len(self.lista_edades_larreta)
+        else:
+            promedio_larreta = 0
+        
+        print(f"El promedio de edades de los votantes de Milei es: {promedio_milei:.2f} y el de Larreta es: {promedio_larreta:.2f}")
+
 
     def btn_informar_3_onclick(self):
         pass
 
     def btn_informar_4_onclick(self):
-        pass
+        #4- Informar las edades que superan el promedio total
+
+        acumulador_edades_massa = 0
+        acumulador_edades_milei = 0
+        acumulador_edaes_larreta = 0
+
+        for edades in self.lista_edades_massa:
+            acumulador_edades_massa += edades
+      
+        for edades in self.lista_edades_milei:
+            acumulador_edades_milei += edades
+
+        for edades in self.lista_edades_larreta:
+            acumulador_edaes_larreta += edades
+        
+        acumulador_total = acumulador_edades_massa + acumulador_edades_milei + acumulador_edaes_larreta
+        contador_total = len(self.lista_edades_massa) + len(self.lista_edades_milei) + len(self.lista_edades_larreta)
+
+        if contador_total > 0: #NO HAY NEGATIVOS, sino != 0
+            promedio_total = acumulador_total / contador_total
+        else:
+            promedio_total = 0
+        
+        print(f"promedio total: {promedio_total:.2f}") #dato para verificacion
+        
+        for edades in self.lista_edades_massa:
+            if edades > promedio_total:
+                print("La edad del votante de Massa que superan el promedio es: ", edades)
+        
+        for edades in self.lista_edades_milei:
+            if edades > promedio_total:
+                print("La edad del votante de Milei que superan el promedio es: ", edades)
+
+        for edades in self.lista_edades_larreta:
+            if edades > promedio_total:
+                print("La edad del votante de Larreta que superan el promedio es: ", edades)
 
     def btn_informar_5_onclick(self):
         pass
 
     def btn_informar_6_onclick(self):
-        pass
+        #6- Informar Porcentaje de votos de cada participante
+
+        contador_votos_massa = len(self.lista_edades_massa)
+        contador_votos_milei = len(self.lista_edades_milei)
+        contador_votos_larreta = len(self.lista_edades_larreta)
+        contador_total = (contador_votos_larreta + contador_votos_massa + contador_votos_milei)
+
+        if contador_total != 0:
+            porcentaje_votos_massa = (contador_votos_massa * 100) / contador_total 
+            porcentaje_votos_milei = (contador_votos_milei * 100) / contador_total 
+            porcentaje_votos_larreta = (contador_votos_larreta * 100) / contador_total 
+        else:
+            porcentaje_votos_massa = 0
+            porcentaje_votos_milei = 0
+            porcentaje_votos_larreta = 0
+
+        mensaje = f"Porcentaje de votos de cada candidato\n"
+        mensaje += f"porcentaje Massa: {porcentaje_votos_massa:.2f}%\n"
+        mensaje += f"porcentaje Milei: {porcentaje_votos_milei:.2f}%\n"
+        mensaje += f"porcentaje Larreta: {porcentaje_votos_larreta:.2f}%"
+
+        print(mensaje)
+
+
 
     def btn_informar_7_onclick(self):
         pass
 
     def btn_informar_8_onclick(self):
-        pass
+        #8- Informar el ganador de las elecciones (Suponiendo que solo hay uno, El que mas votos tuvo).
+
+        contador_votos_massa = len(self.lista_edades_massa)
+        contador_votos_milei = len(self.lista_edades_milei)
+        contador_votos_larreta = len(self.lista_edades_larreta)
+
+        if contador_votos_massa > contador_votos_milei and contador_votos_massa > contador_votos_larreta:
+            contador_mayor = f"El ganador de las elecciones es Massa con: {contador_votos_massa:.2f} votos"
+        elif contador_votos_milei > contador_votos_larreta:
+            contador_mayor = f"El ganador de las elecciones es Milei con: {contador_votos_milei:.2f} votos"
+        else:
+            contador_mayor = f"El ganador de las elecciones es Larreta con: {contador_votos_larreta:.2f} votos"
+
+        print(contador_mayor)
+
 
     def btn_informar_9_onclick(self):
         #9- Indicar que candidato tiene el mayor promedio de edad entre sus votantes
@@ -292,8 +386,7 @@ class App(customtkinter.CTk):
 
         for edad in self.lista_edades_massa:
             acumulador_edades_massa += edad
-        
-        if len(self.lista_edades_massa) > 0:
+        if len(self.lista_edades_massa) > 0: #NO HAY NEGATIVOS, sino != 0
             promedio_edades_massa = acumulador_edades_massa / len(self.lista_edades_massa)
         else:
             promedio_edades_massa = 0
@@ -301,8 +394,7 @@ class App(customtkinter.CTk):
         
         for edad in self.lista_edades_milei:
             acumulador_edades_milei += edad
-        
-        if len(self.lista_edades_milei) > 0:
+        if len(self.lista_edades_milei) > 0: #NO HAY NEGATIVOS, sino != 0
             promedio_edades_milei = acumulador_edades_milei / len(self.lista_edades_milei)
         else:
             promedio_edades_milei = 0
@@ -310,21 +402,18 @@ class App(customtkinter.CTk):
         
         for edad in self.lista_edades_larreta:
             acumulador_edades_larreta += edad
-        
-        if len(self.lista_edades_larreta) > 0:
+        if len(self.lista_edades_larreta) > 0: #NO HAY NEGATIVOS, sino != 0
             promedio_edades_larreta = acumulador_edades_larreta / len(self.lista_edades_larreta)
         else:
             promedio_edades_larreta = 0
 
 
         if promedio_edades_massa > promedio_edades_milei and promedio_edades_massa > promedio_edades_larreta:
-            promedio_mayor = f"Massa con {promedio_edades_massa}"
+            promedio_mayor = f"Massa tiene el mayor promedio de edades con {promedio_edades_massa}"
         elif promedio_edades_milei > promedio_edades_larreta:
-            promedio_mayor = f"Millei con {promedio_edades_milei}"
+            promedio_mayor = f"Millei tiene el mayor promedio de edades con {promedio_edades_milei}"
         else:
-            promedio_mayor = f"Larreta con {promedio_edades_larreta}"
-            promedio_mayor = "Larreta con " + str(promedio_edades_larreta)
-            promedio_mayor = "Larreta con {0}".format(promedio_edades_larreta)
+            promedio_mayor = f"Larreta tiene el mayor promedio de edades con {promedio_edades_larreta}"
 
         print(promedio_mayor)
 

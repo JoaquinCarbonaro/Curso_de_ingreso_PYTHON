@@ -5,9 +5,10 @@ from tkinter.simpledialog import askstring as prompt
 import customtkinter
 
 '''
+nombre:Joaquin
+apellido:Carbonaro
+---
 Enunciado:
-
-
 A)  Al presionar el botón 'Agregar' se deberan cargar tantos vehiculos como el usuario desee. 
     Los datos a cargar de cada vehiculo son: marca de vehiculo (ford, volvo, fiat) y kilometros*.
 
@@ -39,18 +40,15 @@ para determinar que informe hacer, tenga en cuenta lo siguiente:
 EL RESTO DE LOS INFORMES LOS PUEDE IGNORAR. 
 
 C) Al presionar el boton Informar 
-    0- El mayor kilometraje y su marca de vehiculo.
+        0- El mayor kilometraje y su marca de vehiculo.
     1- El menor kilometraje y su marca de vehiculo.
-    2- Kilometraje promedio de los autos.
-    3- La marca con mas autos
+        2- Kilometraje promedio de los autos.
+        3- La marca con mas autos
     4- La marca con menos autos
-    5- Informar los kilometrajes que NO superan el promedio (total).
+        5- Informar los kilometrajes que NO superan el promedio (total).
     6- Informar los kilometrajes que superan el promedio (total).
     7- Indicar el menor de los promedios de kilometros por marca.
-    8- Indicar el mayor de los promedios de kilometros por marca.
-
-
-
+        8- Indicar el mayor de los promedios de kilometros por marca.
 
 '''
 
@@ -95,9 +93,9 @@ class App(customtkinter.CTk):
         self.btn_informar_8= customtkinter.CTkButton(master=self, text="Informar 8", command=self.btn_informar_8_onclick)
         self.btn_informar_8.grid(row=13, padx=20, pady=20, columnspan=2, sticky="nsew")             
 
-        self.lista_ford_kms = [20,552,6]
-        self.lista_volvo_kms = [855,225,22]
-        self.lista_fiat_kms = [5,225,2255]
+        self.lista_ford_kms = []
+        self.lista_volvo_kms = []
+        self.lista_fiat_kms = []
 
     def btn_agregar_on_click(self):
         # A)  Al presionar el botón 'Agregar' se deberan cargar tantos vehiculos como el usuario desee. 
@@ -109,14 +107,23 @@ class App(customtkinter.CTk):
 
         while True:
             marca = prompt("UTN","Ingrese marca de vehiculo: (ford, volvo, fiat)")
-            while marca.lower() != "ford" and marca.lower() != "volvo"  and marca.lower() != "fiat":
+            while (marca == None or marca.isdigit()) or (marca.lower() != "ford" and marca.lower() != "volvo"  and marca.lower() != "fiat"):
                 marca = prompt("UTN","Reingrese marca de vehiculo: (ford, volvo, fiat)")
 
             kilometros = prompt("UTN","Ingrese los kilometros:")
-            while kilometros.isdigit() == False or kilometros == None or kilometros == '0':
+            while kilometros == "" or kilometros == None or kilometros.isalpha() or int(kilometros) <= 0:
                 kilometros = prompt("UTN","Reingrese los kilometros:")
             kilometros = int(kilometros)
 
+            match marca:
+                case 'ford':
+                    self.lista_ford_kms.append(kilometros)
+                case 'volvo':
+                    self.lista_volvo_kms.append(kilometros)
+                case 'fiat':
+                    self.lista_fiat_kms.append(kilometros)
+            alert("UTN", "El vehículo se cargo correctamente")
+            
             continuar = question(title="continuar", message="¿Desea continuar ingresando números?")
             if continuar:
                 continue
@@ -180,20 +187,54 @@ class App(customtkinter.CTk):
             print("Listas vacias")
 
 
-    def btn_informar_0_click(self):
-       pass
-
-
     def btn_informar_1_onclick(self):
         pass
 
 
     def btn_informar_2_onclick(self):
-        pass        
+        #2- Kilometraje promedio de los autos. (de cada marca)
+
+        acumulador_ford = 0
+        acumulador_volvo = 0
+        acumulador_fiat = 0
+
+        for kms in self.lista_ford_kms:
+            acumulador_ford += kms
+        if len(self.lista_ford_kms) > 0: #NO HAY NEGATIVOS, sino != 0
+            promedio_ford = acumulador_ford / len(self.lista_ford_kms)
+        else:
+            promedio_ford = 0
+      
+        for kms in self.lista_volvo_kms:
+            acumulador_volvo += kms
+        if len(self.lista_volvo_kms) > 0: #NO HAY NEGATIVOS, sino != 0
+            promedio_volvo = acumulador_volvo / len(self.lista_volvo_kms)
+        else:
+            promedio_volvo = 0
+
+        for kms in self.lista_fiat_kms:
+            acumulador_fiat += kms
+        if len(self.lista_fiat_kms) > 0: #NO HAY NEGATIVOS, sino != 0
+            promedio_fiat = acumulador_fiat / len(self.lista_fiat_kms)
+        else:
+            promedio_fiat = 0
+        
+
+        print(f"Los kms promedios de los autos ford son: {promedio_ford:.2f}, de los autos volvo: {promedio_volvo:.2f} y de los autos fiat: {promedio_fiat:.2f}")
 
 
     def btn_informar_3_onclick(self):
-        pass
+        #3- La marca con mas autos
+        
+        if len(self.lista_ford_kms) > len(self.lista_volvo_kms) and len(self.lista_ford_kms) > len(self.lista_fiat_kms):
+            contador_mayor = f"La marca con mas autos es Ford con: {len(self.lista_ford_kms):.2f}"
+        elif len(self.lista_volvo_kms) > len(self.lista_fiat_kms):
+            contador_mayor = f"La marca con mas autos es Volvo con: {len(self.lista_volvo_kms):.2f}"
+        else:
+            contador_mayor = f"La marca con mas autos es Fiat con: {len(self.lista_fiat_kms):.2f}"
+
+        print(contador_mayor)
+
 
 
     def btn_informar_4_onclick(self):
@@ -201,7 +242,42 @@ class App(customtkinter.CTk):
 
 
     def btn_informar_5_onclick(self):
-        pass
+        #5- Informar los kilometrajes que NO superan el promedio (total).
+
+        acumulador_ford = 0
+        acumulador_volvo = 0
+        acumulador_fiat = 0
+
+        for kms in self.lista_ford_kms:
+            acumulador_ford += kms
+      
+        for kms in self.lista_volvo_kms:
+            acumulador_volvo += kms
+
+        for kms in self.lista_fiat_kms:
+            acumulador_fiat += kms
+        
+        acumulador_total = acumulador_ford + acumulador_volvo + acumulador_fiat
+        contador_total = len(self.lista_ford_kms) + len(self.lista_volvo_kms) + len(self.lista_fiat_kms)
+
+        if contador_total > 0: #NO HAY NEGATIVOS, sino != 0
+            promedio_total = acumulador_total / contador_total
+        else:
+            promedio_total = 0
+        
+        for kms in self.lista_ford_kms:
+            if kms < promedio_total:
+                print("Kilometro de Ford que no supera el promedio total: ", kms)
+        
+        for kms in self.lista_volvo_kms:
+            if kms < promedio_total:
+                print("Kilometro de Volvo que no supera el promedio total: ", kms)
+
+        for kms in self.lista_fiat_kms:
+            if kms < promedio_total:
+                print("Kilometro de Fiat que no supera el promedio total: ", kms)
+
+
 
 
     def btn_informar_6_onclick(self):
@@ -218,12 +294,10 @@ class App(customtkinter.CTk):
         acumulador_ford = 0
         acumulador_volvo = 0
         acumulador_fiat = 0
-        
 
         for kms in self.lista_ford_kms:
             acumulador_ford += kms
-        
-        if len(self.lista_ford_kms) > 0:
+        if len(self.lista_ford_kms) > 0: #NO HAY NEGATIVOS, sino != 0
             promedio_kms_ford = acumulador_ford / len(self.lista_ford_kms)
         else:
             promedio_kms_ford = 0
@@ -231,8 +305,7 @@ class App(customtkinter.CTk):
         
         for kms in self.lista_volvo_kms:
             acumulador_volvo += kms
-        
-        if len(self.lista_volvo_kms) > 0:
+        if len(self.lista_volvo_kms) > 0: #NO HAY NEGATIVOS, sino != 0
             promedio_kms_volvo = acumulador_volvo / len(self.lista_volvo_kms)
         else:
             promedio_kms_volvo = 0
@@ -240,19 +313,18 @@ class App(customtkinter.CTk):
         
         for kms in self.lista_fiat_kms:
             acumulador_fiat += kms
-        
-        if len(self.lista_fiat_kms) > 0:
+        if len(self.lista_fiat_kms) > 0: #NO HAY NEGATIVOS, sino != 0
             promedio_kms_fiat = acumulador_fiat / len(self.lista_fiat_kms)
         else:
             promedio_kms_fiat = 0
 
 
         if promedio_kms_ford > promedio_kms_volvo and promedio_kms_ford > promedio_kms_fiat:
-            promedio_mayor = f"El mayor de los promedios de kilometros es de la marca Ford con: {promedio_kms_ford:.2f}"
+            promedio_mayor = f"Ford tiene el mayor de los promedios de kilometros con: {promedio_kms_ford:.2f}"
         elif promedio_kms_volvo > promedio_kms_fiat:
-            promedio_mayor = f"El mayor de los promedios de kilometros es de la marca Volvo con: {promedio_kms_volvo:.2f}"
+            promedio_mayor = f"Volvo tiene el mayor de los promedios de kilometros con: {promedio_kms_volvo:.2f}"
         else:
-            promedio_mayor = f"El mayor de los promedios de kilometros es de la marca Fiat con: {promedio_kms_fiat:.2f}"
+            promedio_mayor = f"Fiat tiene el mayor de los promedios de kilometros con: {promedio_kms_fiat:.2f}"
 
         print(promedio_mayor)
 

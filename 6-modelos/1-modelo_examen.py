@@ -5,8 +5,9 @@ from tkinter.simpledialog import askstring as prompt
 import customtkinter
 
 '''
-Joaquin Carbonaro DNI: 43.517.710
-.
+nombre:Joaquin
+apellido:Carbonaro
+---
 Enunciado:
 La Cueva De Fausto:
 Se pide un programa que agrega los ingresos y egresos de dinero en dos divisas, dólares y pesos
@@ -40,14 +41,14 @@ EL RESTO DE LOS INFORMES LOS PUEDE IGNORAR.
 *******Tener en cuenta que pueden no haber ingresos o egresos**********
 C) Al presionar el boton Informar
         0- Cantidad de dinero (en ARS) y posicion (indice) de la transaccion de mayor valor
-            1- Cantidad de dinero (en ARS) y posicion (indice) de la transaccion de menor valor
-    2- Promedio de dinero ingresado (mostrarlo en ARS)
-            3- Promedio de dinero egresado (mostrarlo en USD)
-    4- Informar las transacciones que superan el promedio total (en ARS)
+    1- Cantidad de dinero (en ARS) y posicion (indice) de la transaccion de menor valor
+        2- Promedio de dinero ingresado (mostrarlo en ARS)
+    3- Promedio de dinero egresado (mostrarlo en USD)
+        4- Informar las transacciones que superan el promedio total (en ARS)
     5- Informar las transacciones que NO superan el promedio total (en USD)
-            6- Informar la cantidad de Transacciones que superan el promedio total
+        6- Informar la cantidad de Transacciones que superan el promedio total
     7- Informar la cantidad de transacciones que NO superan el promedio total
-            8- Indicar Si hubo mas ingresos o egresos
+        8- Indicar Si hubo mas ingresos o egresos
         9- Indicar Si hubo ganancia o perdida
 
 
@@ -75,17 +76,41 @@ class App(customtkinter.CTk):
         self.btn_mostrar = customtkinter.CTkButton(master=self, text="Mostrar", command=self.btn_mostrar_on_click)
         self.btn_mostrar.grid(row=4, padx=20, pady=20, columnspan=2, sticky="nsew")
 
-        self.btn_informar= customtkinter.CTkButton(master=self, text="Informar", command=self.btn_informar_on_click)
-        self.btn_informar.grid(row=5, padx=20, pady=20, columnspan=2, sticky="nsew")        
+        self.btn_informar_0= customtkinter.CTkButton(master=self, text="Informar 0", command=self.btn_informar_0_onclick)
+        self.btn_informar_0.grid(row=5, padx=20, pady=20, columnspan=2, sticky="nsew")     
+
+        self.btn_informar_2= customtkinter.CTkButton(master=self, text="Informar 2", command=self.btn_informar_2_onclick)
+        self.btn_informar_2.grid(row=7, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_3= customtkinter.CTkButton(master=self, text="Informar 3", command=self.btn_informar_3_onclick)
+        self.btn_informar_3.grid(row=8, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_4= customtkinter.CTkButton(master=self, text="Informar 4", command=self.btn_informar_4_onclick)
+        self.btn_informar_4.grid(row=9, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_5= customtkinter.CTkButton(master=self, text="Informar 5", command=self.btn_informar_5_onclick)
+        self.btn_informar_5.grid(row=10, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_6= customtkinter.CTkButton(master=self, text="Informar 6", command=self.btn_informar_6_onclick)
+        self.btn_informar_6.grid(row=11, padx=20, pady=20, columnspan=2, sticky="nsew")   
+
+        self.btn_informar_7= customtkinter.CTkButton(master=self, text="Informar 7", command=self.btn_informar_7_onclick)
+        self.btn_informar_7.grid(row=12, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_8= customtkinter.CTkButton(master=self, text="Informar 8", command=self.btn_informar_8_onclick)
+        self.btn_informar_8.grid(row=13, padx=20, pady=20, columnspan=2, sticky="nsew")
+
+        self.btn_informar_9= customtkinter.CTkButton(master=self, text="Informar 9", command=self.btn_informar_9_onclick)
+        self.btn_informar_9.grid(row=14, padx=20, pady=20, columnspan=2, sticky="nsew")        
 
         self.lista_transacciones = []
 
 
     def btn_agregar_on_click(self):
-#         A)  Al presionar el botón 'Agregar' se debera cargar el dinero (Positivo si es un ingreso, negativo si es un egreso),
+        #A)  Al presionar el botón 'Agregar' se debera cargar el dinero (Positivo si es un ingreso, negativo si es un egreso),
         # el cual podra ser ingresado en ARS o en USD.
 
-        #     El tipo de cambio indicado mediante una lista desplegable.
+        # El tipo de cambio indicado mediante una lista desplegable.
 
         # * Flotantes Distintos de 0
 
@@ -118,6 +143,7 @@ class App(customtkinter.CTk):
     def btn_mostrar_on_click(self):
         #B) Al presionar el boton mostrar se deberan listar las transacciones en USD, en ARS y su posicion 
         # en la lista (por terminal)
+        
         DOLAR = 541
 
         for i in range(len(self.lista_transacciones)):
@@ -127,8 +153,9 @@ class App(customtkinter.CTk):
 
 
 
-    def btn_informar_on_click(self):
+    def btn_informar_0_onclick(self):
         #0- Cantidad de dinero (en ARS) y posicion (indice) de la transaccion de mayor valor
+        
         bandera_primer = True
         maximo = None
 
@@ -139,17 +166,110 @@ class App(customtkinter.CTk):
                 posicion = i
                 bandera_primer = False
         print(f"La transaccion de mayor valor es {maximo} y su posicion es: {posicion}")
+    
+        pass
 
+    def btn_informar_2_onclick(self):
+        #2- Promedio de dinero ingresado (mostrarlo en ARS)
+
+        acumulador_dinero_ingresado = 0
+        contador_dinero_ingresado = 0
+
+        for dinero in self.lista_transacciones:
+            if dinero > 0:
+                acumulador_dinero_ingresado += dinero
+                contador_dinero_ingresado += 1 
+
+        if contador_dinero_ingresado > 0:
+            promedio_dinero_ingresado = acumulador_dinero_ingresado / contador_dinero_ingresado
+        else:
+            promedio_dinero_ingresado = 0
+
+        print(f"El promedio de dinero ingresado es: {promedio_dinero_ingresado:.2f}")
+    
+
+    def btn_informar_3_onclick(self):
+        pass
+    
+    def btn_informar_4_onclick(self):
+        #4- Informar las transacciones que superan el promedio total (en ARS)
+
+        acumulador_transacciones = 0
+        contador_transacciones = len(self.lista_transacciones)
+
+        for dinero in self.lista_transacciones:
+            acumulador_transacciones += dinero
+
+        if contador_transacciones != 0:
+            promedio_total = acumulador_transacciones / contador_transacciones
+        else:
+            promedio_total = 0
+
+        print(f"promedio total: {promedio_total:.2f}") #dato para verificacion
+
+        for dinero in self.lista_transacciones:
+            if dinero > promedio_total:
+                print(f"Transaccion que supera el promedio total: {dinero:.2f}")
+
+    
+    def btn_informar_5_onclick(self):
+        pass
+    
+    def btn_informar_6_onclick(self):
+        #6- Informar la cantidad de Transacciones que superan el promedio total
+
+        acumulador_transacciones = 0
+        contador_transacciones = len(self.lista_transacciones)
+        contador_transaccion_mayor_promedio = 0
+
+        for dinero in self.lista_transacciones:
+            acumulador_transacciones += dinero
+
+        if contador_transacciones != 0:
+            promedio_total = acumulador_transacciones / contador_transacciones
+        else:
+            promedio_total = 0
+
+        print(f"promedio total: {promedio_total:.2f}") #dato para verificacion
+
+        for dinero in self.lista_transacciones:
+            if dinero > promedio_total:
+                contador_transaccion_mayor_promedio += 1 
+                print(f"La cantidad de transacciones que supean el promedio son: {contador_transaccion_mayor_promedio}")
+    
+    def btn_informar_7_onclick(self):
+        pass
+    
+    def btn_informar_8_onclick(self):
+        #8- Indicar Si hubo mas ingresos o egresos
+        
+        contador_ingresos = 0
+        contador_egresos = 0
+
+        for dinero in self.lista_transacciones:
+            if dinero > 0:
+                contador_ingresos += 1
+            else:
+                contador_egresos += 1
+
+        if contador_ingresos > contador_egresos:
+            print("Hubo mas ingresos")
+        else:
+            print("Hubo mas egresos")
+
+    
+    def btn_informar_9_onclick(self):
         #9- Indicar Si hubo ganancia o perdida
+        
         acumulador = 0
 
-        for i in range(len(self.lista_transacciones)):
-            dinero = self.lista_transacciones[i]
+        for dinero in self.lista_transacciones:
             acumulador += dinero
+
         if acumulador > 0:
-            print(f"Hubo ganancias")
+            print("Hubo ganancias")
         else:
-            print(f"Hubo perdidas")
+            print("Hubo perdidas")
 
 
 
